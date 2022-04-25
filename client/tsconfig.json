@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "module": "es2020",
+    "target": "es6",
+    "allowJs": true,
+    "declaration": true,
+    "sourceMap": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    // QoL
+    "strict": false,
+    "noImplicitAny": false,
+    "noImplicitOverride": false,
+    "noImplicitReturns": false,
+    "noImplicitThis": false,
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "files": [
+    "src/main.ts"
+  ]
+}

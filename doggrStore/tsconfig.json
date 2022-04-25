@@ -6,7 +6,7 @@
       "ES6",
       "DOM"
     ],
-    "target": "es6",
+    "target": "es2020",
     "module": "CommonJS",
     "moduleResolution": "node",
     "declaration": true,
@@ -22,7 +22,7 @@
     "noImplicitThis": false,
   },
   "include": [
-    "server.js",
+    "server.ts",
     "src/**/*",
   ]
 }

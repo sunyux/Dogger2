@@ -1,7 +1,7 @@
 /** @type {import('ts-jest/dist/types').InitialOptionsTsJest} */
 module.exports = {
   preset: "ts-jest/presets/js-with-ts",
-  rootDir: "./",
+  //rootDir: "./",
   testEnvironment: "node",
   moduleDirectories: ["node_modules", "src", "."],
   testPathIgnorePatterns: [
