@@ -3,22 +3,24 @@
     "allowSyntheticDefaultImports": true,
     "module": "es2020",
     "target": "es6",
-    "allowJs": true,
+    "allowJs": false,
     "declaration": true,
+    "declarationDir": "dist",
     "sourceMap": true,
     "moduleResolution": "node",
     "esModuleInterop": true,
     // QoL
-    "strict": false,
+    "strict": true,
+    "strictNullChecks": true,
     "noImplicitAny": false,
-    "noImplicitOverride": false,
-    "noImplicitReturns": false,
-    "noImplicitThis": false,
+    "strictPropertyInitialization": true
   },
   "include": [
-    "src/**/*"
+    "src/**/*",
+    "State.ts"
   ],
   "files": [
-    "src/main.ts"
-  ]
+    "src/index.ts"
+  ],
+  "outDir": "dist",
 }

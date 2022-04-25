@@ -23,14 +23,6 @@ describe("Static Routes", () => {
     expect(res.text).toEqual('about:GET');
   });
 
-  it("Handles the delete route request properly", async () => {
-    let res = await request(app)
-      .delete("/deleteExample")
-      .expect(200);
-
-    expect(res.text).toContain("Delete");
-  });
-
   it("responds with 404 when route doesn't exist", async () => {
     let res = await request(app)
       .get("/hellos")
@@ -39,12 +31,20 @@ describe("Static Routes", () => {
       });
   });
 
+  it("Handles the delete route request properly", async () => {
+    let res = await request(app)
+      .delete("/deleteExample")
+      .expect(200);
+
+    expect(res.text).toContain("Delete");
+  });
+
   it("Handles the PUT route request properly", () => {
-    return request(app)
+    let res = request(app)
       .put("/putExample")
       .expect(200)
       .expect((res) => res.text.includes("Put"));
-
+    return res;
   });
 
   it("Handles the Patch request properly", () => {
@@ -66,7 +66,7 @@ describe("Static Routes", () => {
   it("Rejects all non-matching GET requests to each endpoint", async () => {
     return Promise.all(
       verbs
-        .filter((value) => { return value !== "get"; })
+        .filter((value) => { return value !== "get"; })        
         .map((verb) => {
           return request(app)
             .get(`/${verb}Example`)
