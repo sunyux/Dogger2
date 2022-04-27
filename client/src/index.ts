@@ -1,3 +1,4 @@
+import { renderApp } from "./App";
 import { State } from "./types/StateTypes";
 
 let state: State = {
@@ -5,23 +6,30 @@ let state: State = {
   count: 0,
 };
 
-global.changeCount = () => {
-  state.count += 1;
-  render();
+let eventHandlers = {
+  increaseCount: (oldState) => {
+    return { ...oldState, count: oldState.count + 1 };
+  },
+
+  decreaseCount: (oldState) => {
+    return { ...oldState, count: oldState.count - 1 };
+  },
 };
 
-export function renderApp(state: State) {
-  return `<p onClick="changeCount()">You've clicked ${state.count} times.</p>`;
-}
+//global.emitEvent("staticCount");
+global.emitEvent = (eventName) => {
+  const eventHandler = eventHandlers[eventName];
+  console.log("emitting event: ", eventName);
+  state = eventHandler(state);
+  render();
+};
 
 function render() {
   let html = renderApp(state);
   document.body.innerHTML = html;
 }
 
-
 render();
-
 
 /*
 - Large-ish profile picture of the next match
@@ -30,3 +38,4 @@ render();
 - A list of previous pets you Liked
 - A button for each to Unmatch
 */
+
