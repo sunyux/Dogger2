@@ -1,0 +1,15 @@
+version: "3"
+services:
+    doggrdb:
+        container_name: doggrdb
+        image: mongo
+        volumes:
+            - /data/doggrdb:/data/db # this is format of host_path:container_path
+    doggr_backend:
+        container_name: doggr_backend
+        build: ./backend/
+        restart: always           
+        ports:
+            - "9000:9000" # This will be the ONLY port exposed externally anywhere        
+        depends_on:
+            - doggrdb

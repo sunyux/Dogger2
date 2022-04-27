@@ -1,26 +1,17 @@
 import { renderApp } from "./App";
 import { State } from "./types/StateTypes";
+import initialState, { getRandomProfile } from "./initialState";
+import eventHandlers, { Event } from "./eventHandlers";
 
-let state: State = {
-  name: "Doggr",
-  count: 0,
-};
+let state = initialState;
 
-let eventHandlers = {
-  increaseCount: (oldState) => {
-    return { ...oldState, count: oldState.count + 1 };
-  },
 
-  decreaseCount: (oldState) => {
-    return { ...oldState, count: oldState.count - 1 };
-  },
-};
 
 //global.emitEvent("staticCount");
-global.emitEvent = (eventName) => {
+global.emitEvent = (eventName: Event, param?: any) => {
   const eventHandler = eventHandlers[eventName];
   console.log("emitting event: ", eventName);
-  state = eventHandler(state);
+  state = eventHandler(state, param);
   render();
 };
 
