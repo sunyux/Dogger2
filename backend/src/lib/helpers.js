@@ -101,6 +101,8 @@ export async function testMongo() {
 
 export async function testPostgres() {
 
+  // Note we don't have to pass any connection string here
+  // as Postgres will pull it directly from our .env
   const client = new Client();
   await client.connect();
   const res = await client.query('SELECT $1::text as message', ['Postgres Connection Successful']);

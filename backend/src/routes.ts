@@ -4,7 +4,6 @@ import path from "path";
 import express from "express";
 import { testMongo, testPostgres } from "./lib/helpers";
 
-
 export default function setupRoutes(app) {
 
   app.use(cors());
@@ -22,7 +21,8 @@ export default function setupRoutes(app) {
   });
 
   router.get("/testMongo", async (req, res) => {
-    res.json(await testMongo());
+    let mongoinfo = await testMongo();
+    res.json(mongoinfo);
   });
 
   router.get("/testPostgres", async (req, res) => {
