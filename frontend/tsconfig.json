@@ -9,6 +9,7 @@
     "sourceMap": true,
     "moduleResolution": "node",
     "esModuleInterop": true,
+    "jsx": "react",
     // QoL
     "strict": true,
     "strictNullChecks": true,
@@ -17,10 +18,10 @@
   },
   "include": [
     "src/**/*",
-    "State.ts"
+    "src/App.tsx"
   ],
   "files": [
-    "src/index.ts"
+    "src/index.tsx"
   ],
   "outDir": "dist",
 }
