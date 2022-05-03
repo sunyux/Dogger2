@@ -2,6 +2,7 @@ import cors from "cors";
 import { promises as fs } from "fs";
 import path from "path";
 import express from "express";
+import { testMongo, testPostgres } from "./lib/helpers";
 
 
 export default function setupRoutes(app) {
@@ -16,12 +17,16 @@ export default function setupRoutes(app) {
     res.json(req.body);
   });
 
-  router.get("/about", (req, res) => {
+  router.get("/about", async (req, res) => {
     res.status(200).send("about:GET");
   });
 
-  router.get("/", async (req, res) => {
-    return getStaticFile(res, "index.html");
+  router.get("/testMongo", async (req, res) => {
+    res.json(await testMongo());
+  });
+
+  router.get("/testPostgres", async (req, res) => {
+    res.json(await testPostgres());
   });
 
   router.post("/postExample", (req, res) => getStaticFile(res, "post.html"));
@@ -39,6 +44,10 @@ export default function setupRoutes(app) {
 
   // This will redirect all requests made to /api/vi/... to the router
   app.use("/api/v1", router);
+
+  app.get("/", async (req, res) => {
+    return getStaticFile(res, "index.html");
+  });
 
   app.use((req, res, next) => {
     return res.status(404).json({

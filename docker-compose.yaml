@@ -5,14 +5,25 @@ services:
         image: mongo
         volumes:
             - /data/doggrdb:/data/db # this is format of host_path:container_path
+    postgres:
+        container_name: postgres
+        image: postgres
+        restart: always
+        ports:
+            - "5432:5432"
+        environment:
+            - POSTGRES_DB=doggrdb
+            - POSTGRES_USER=doggr_user
+            - POSTGRES_PASSWORD=doggr_pass
     backend:
         container_name: backend
         build: ./backend/
-        restart: always           
+        restart: always
         ports:
-            - "9000:9000" # This will be the ONLY port exposed externally anywhere        
-        depends_on:
+            - "9000:9000" # This will be the ONLY port exposed externally anywhere
+        depends_on: #This is a lie
             - doggrdb
+            - postgres
     frontend:
        container_name: frontend
        build: ./frontend/
