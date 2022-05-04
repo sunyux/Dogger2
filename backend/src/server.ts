@@ -7,7 +7,7 @@ import { isAsyncFunction } from "util/types";
 import { assert } from "console";
 import express from "express";
 
-import setupRoutes from "./src/routes";
+import setupRoutes from "./routes";
 
 
 
