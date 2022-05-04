@@ -8,7 +8,8 @@
     "start": "nodemon ./dist/server.js",
     "dev": "concurrently -k \"npx tsc -w \" \"nodemon ./dist/server.js\"",
     "test": "jest --watch --detectOpenHandles",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "seed": "npx tsc && node dist/database/seed.js"
   },
   "keywords": [],
   "author": "",

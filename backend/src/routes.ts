@@ -3,6 +3,8 @@ import { promises as fs } from "fs";
 import path from "path";
 import express from "express";
 import { testMongo, testPostgres } from "./lib/helpers";
+import { checkDuplicateEmail } from "./middlewares/verifySignUp";
+import { createUser } from "./services/userService";
 
 export default function setupRoutes(app) {
 
@@ -11,6 +13,10 @@ export default function setupRoutes(app) {
 
   // We're using a router now, so that we can prefix it with /api/v1 later
   const router = express.Router();
+
+  router.post("/users", checkDuplicateEmail, createUser );
+
+
 
   router.use("/testJson", (req, res) => {
     res.json(req.body);
@@ -29,19 +35,7 @@ export default function setupRoutes(app) {
     res.json(await testPostgres());
   });
 
-  router.post("/postExample", (req, res) => getStaticFile(res, "post.html"));
-
-  router.put("/putExample", (req, res) =>
-    getStaticFile(res, "put.html"));
-
-  router.patch("/patchExample", (req, res) => {
-    return getStaticFile(res, "patch.html");
-  });
-
-  router.delete("/deleteExample", (req, res) => {
-    return getStaticFile(res, "delete.html");
-  });
-
+  
   // This will redirect all requests made to /api/vi/... to the router
   app.use("/api/v1", router);
 
