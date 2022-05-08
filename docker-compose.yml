@@ -4,7 +4,7 @@ services:
         container_name: doggrdb
         image: mongo
         volumes:
-            - /data/doggrdb:/data/db # this is format of host_path:container_path
+            - /Users/yuxinsun/Desktop/Web/doggerdb/data/doggrdb:/data/db # this is format of host_path:container_path
     postgres:
         container_name: postgres
         image: postgres

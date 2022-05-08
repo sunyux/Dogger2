@@ -1,6 +1,6 @@
 import "dotenv/config";
 import { Sequelize, DataTypes } from "sequelize";
-import { db, User } from "./models";
+import { db, User,Profile } from "./models";
 
 
 const userSeedData = [
@@ -8,6 +8,10 @@ const userSeedData = [
   { email: "test2@email.com", password: "password" },
 ];
 
+const ProfileSeedData=[
+  {name:"Test name1",imageURL:"https://loremflickr.com/320/240"},
+  {name:"Test name2",imageURL:"https://loremflickr.com/320/240"},
+];
 
 const seed = async () => {
   console.log("Beginning seed");
@@ -15,8 +19,9 @@ const seed = async () => {
   // force true will drop the table if it already exists
   // such that every time we run seed, we start completely fresh
   await User.sync({ force: true });
-
-  console.log('Tables have synced!');
+  console.log('User Tables have synced!');
+  await Profile.sync({force:true});
+  console.log('Profile Tables have synced!');
 
   await User.bulkCreate(userSeedData, { validate: true })
     .then(() => {
@@ -32,6 +37,23 @@ const seed = async () => {
     })
     .catch((err) => {
       console.log('failed to create seed users');
+      console.log(err);
+    })
+
+    await Profile.bulkCreate(ProfileSeedData, { validate: true })
+    .then(() => {
+      console.log('Profile created');
+    }).catch((err) => {
+      console.log('failed to create seed Profile');
+      console.log(err);
+    });
+  
+  await Profile.create({ name: "testname3", imageURL:"https://loremflickr.com/320/240" })
+    .then(() => {
+      console.log("Created single profile");
+    })
+    .catch((err) => {
+      console.log('failed to create seed profile');
       console.log(err);
     })
     .finally(() => {

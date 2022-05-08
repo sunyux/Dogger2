@@ -20,4 +20,11 @@ export const User = db.define('users', {
   },
 });
 
-
+export const Profile= db.define('profiles', {
+  name: {
+    type: DataTypes.STRING,
+  },
+  imageURL: {
+    type: DataTypes.STRING,
+  },
+});

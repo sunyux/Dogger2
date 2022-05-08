@@ -4,7 +4,9 @@ import path from "path";
 import express from "express";
 import { testMongo, testPostgres } from "./lib/helpers";
 import { checkDuplicateEmail } from "./middlewares/verifySignUp";
+import { checkDuplicateURL } from "./middlewares/verifySignUp";
 import { createUser } from "./services/userService";
+import { createProfile } from "./services/ProfileService";
 
 export default function setupRoutes(app) {
 
@@ -14,7 +16,10 @@ export default function setupRoutes(app) {
   // We're using a router now, so that we can prefix it with /api/v1 later
   const router = express.Router();
 
-  router.post("/users", checkDuplicateEmail, createUser );
+  router.post("/users", checkDuplicateEmail, createUser);
+
+  router.post("/profiles",checkDuplicateURL,createProfile);
+  
 
 
 
