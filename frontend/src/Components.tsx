@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Profile as ProfileType } from "./types/StateTypes";
 import { Link, Outlet } from "react-router-dom";
 import { User } from "./services/UserService";
+import { Profiles_set } from "./services/ProfileService";
 
 export type ProfileProps = {
   id: number,
@@ -130,6 +131,8 @@ export const Header = () => {
     <Link to="/match-history">Match History</Link>
     &nbsp; | &nbsp;
     <Link to="/create-user">Create User</Link>
+    &nbsp; | &nbsp;
+    <Link to="/new-profile">New Profile</Link>
     <br />
     <Outlet />
   </div>
@@ -196,6 +199,7 @@ export const CreateUser = () => {
 }
 
 export const CreateUserForm = ({ handleInputChange, saveUser, user }) => {
+
   return (
     <div>
       <div>
@@ -228,3 +232,86 @@ export const CreateUserForm = ({ handleInputChange, saveUser, user }) => {
     </div>
   )
 }
+
+export const NewProfile = () =>{
+
+  const intialProfileState ={
+    name: "",
+    imageURL: "",
+  };
+  const[profile,setProfile] = useState(intialProfileState);
+  const [submitted, setSubmitted] = useState(false);
+  const [submitFailed, setSubmitFailed] = useState(false);
+
+
+
+  const handleInputChange=event=>{
+    const{name,value}=event.target;
+    setProfile({...profile,[name]:value})
+  }
+
+const saveProfile=()=>{
+  Profiles_set.create(profile)
+  .then(res => {
+    setSubmitted(true);
+    setSubmitFailed(false);
+    console.log(res.data);
+  })
+  .catch(e => {
+    setSubmitFailed(true);
+    console.log("Error creating new profile", e);
+  })
+
+}
+const resetProfile = () => {
+  setProfile(intialProfileState);
+  setSubmitted(false);
+}
+
+return (
+  <div>
+    {submitted ? (
+      <div>
+        <h4>You submitted successfully!</h4>
+        <button onClick={resetProfile}>
+          Reset
+        </button>
+      </div>
+    ) : (
+      <div>
+        <div>           
+          { submitFailed && //This will only render if our prior submit failed
+            <h2>image already exists!</h2>
+          }
+          <label htmlFor="name">Name</label>
+          <input
+            type="text"
+            id="name"
+            required
+            value={profile.name}
+            onChange={handleInputChange}
+            name="name"
+          />
+        </div>
+
+        <div>
+          <label htmlFor="imageURL">imageURL</label>
+          <input
+            type="text"
+            id="imageURL"
+            required
+            value={profile.imageURL}
+            onChange={handleInputChange}
+            name="imageURL"
+          />
+        </div>
+
+        <button onClick={saveProfile}>
+          Save
+        </button>
+      </div>
+    )}
+  </div>
+)
+
+  }  

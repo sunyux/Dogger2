@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import initialState, { getRandomProfile } from "./initialState";
-import { CreateUser, Header, MatchHistory, NotFound, Profile } from "./Components";
+import { CreateUser, Header, MatchHistory, NewProfile, NotFound, Profile } from "./Components";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 function App() {
@@ -46,6 +46,7 @@ function App() {
             <Route path="/" element={profile} />
             <Route path="match-history" element={matchHistory} />            
             <Route path="create-user" element={<CreateUser />} />
+            <Route path="new-profile" element={<NewProfile/>} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
